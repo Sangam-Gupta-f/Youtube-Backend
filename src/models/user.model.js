@@ -18,7 +18,7 @@ const userSchema=new Schema({
        // index:true,
         unique:true
     },
-    fullname:{
+    fullName:{
         type:String,
         required:true,
         lowercase:true,
@@ -43,11 +43,14 @@ const userSchema=new Schema({
     password:{
         type:String,
         required:true
+    },
+    refreshToken: {
+        type: String
     }
 },{timestamps:true})
-userSchema.pre("save", async function(){
-    if(!this.isModefied("password"))return next();
-    this.password=bcrypt.hash("this.password",10);
+userSchema.pre("save", async function(next){
+    if(!this.isModified("password"))return next();
+    this.password=await bcrypt.hash(this.password,10);
      next();
 })
 

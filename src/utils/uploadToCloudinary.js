@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-
+import fs from "fs"
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.API_KEY, 
@@ -16,14 +16,17 @@ const response = await cloudinary.uploader
     }
 )
 console.log("file uploaded", response.url);
-    
+    return response;
 } catch (error) {
 fs.unlinkSync(LocalFilePath)
+return null;
 }
 
 
-console.log(uploadResult);
+console.log(UpoadtoCloud);
 
 
 
 }
+
+export { UpoadtoCloud}
